@@ -11,26 +11,32 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='ability',
+            name='Ability',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=200)),
+                ('name', models.CharField(max_length=20)),
             ],
         ),
         migrations.CreateModel(
+            name='Atribute',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=20)),
+                ('short_name', models.CharField(max_length=3)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Universe',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=200)),
+                ('abilities', models.ManyToManyField(to='universes.Ability')),
+                ('atributes', models.ManyToManyField(to='universes.Atribute')),
+            ],
+        ),
+        migrations.AddField(
+            model_name='ability',
             name='atribute',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=200)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='universe',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('category', models.CharField(max_length=200)),
-                ('subcategory', models.CharField(max_length=200)),
-                ('name', models.CharField(max_length=200)),
-            ],
+            field=models.ForeignKey(to='universes.Atribute'),
         ),
     ]
