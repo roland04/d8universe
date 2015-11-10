@@ -1,6 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Atribute(models.Model):
+class Attribute(models.Model):
     name = models.CharField(max_length=20)
     short_name  = models.CharField(max_length=3)
 
@@ -9,10 +10,10 @@ class Atribute(models.Model):
 
 class Ability(models.Model):
     name = models.CharField(max_length=20)
-    atribute = models.ForeignKey(Atribute)
+    attribute = models.ForeignKey(Attribute)
 
     def __str__(self):
-        return '%s (%s)' % (self.name, self.atribute.short_name)
+        return '%s (%s)' % (self.name, self.attribute.short_name)
 
 class Feature(models.Model):
     name = models.CharField(max_length=20)
@@ -23,28 +24,37 @@ class Feature(models.Model):
 class Universe(models.Model):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=120)
-    atributes = models.ManyToManyField(Atribute)
+    attributes = models.ManyToManyField(Attribute)
     abilities = models.ManyToManyField(Ability)
     features = models.ManyToManyField(Feature)
-    HP_tag = models.CharField(max_length=20, default="Hit Points")
-    EP_tag = models.CharField(max_length=20, default="Energy Points")
+    hp_tag = models.CharField(max_length=20, default="Hit Points")
+    ep_tag = models.CharField(max_length=20, default="Energy Points")
+    creators = models.ManyToManyField(User, through="UniverseCreator")
 
     def __str__(self):
         return self.name
+
+class UniverseCreator(models.Model):
+    user = models.ForeignKey(User)
+    universe = models.ForeignKey(Universe)
+    role = models.CharField(max_length=20, default="Manager")
+
+    def __str__(self):
+        return 'Universe:%s, User:%s -> %s' % (self.universe, self.user, self.role)
 
 class Race(models.Model):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=120)
-    atributes = models.ManyToManyField(Atribute, through='StartAtribute')
+    attributes = models.ManyToManyField(Attribute, through='StartAttribute')
 
     def __str__(self):
         return self.name
 
-class StartAtribute(models.Model):
+class StartAttribute(models.Model):
     race = models.ForeignKey(Race)
-    atribute = models.ForeignKey(Atribute)
+    attribute = models.ForeignKey(Attribute)
     universe = models.ForeignKey(Universe)
-    value = models.DecimalField(max_digits=3, decimal_places=0)
+    value = models.DecimalField(max_digits=3, decimal_places=0, default=1)
 
     def __str__(self):
-        return '%s initial %s' % (self.race, self.atribute)
+        return 'Universe:%s, Race:%s, Attribute:%s -> %s' % (self.universe, self.race, self.attribute, self.value)

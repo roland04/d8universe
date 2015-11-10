@@ -1,20 +1,24 @@
 from django.contrib import admin
 
-from .models import Universe, Atribute, Ability, Race, StartAtribute
+from .models import Universe, UniverseCreator, Attribute, Ability, Race, StartAttribute
 
 class UniverseAdmin(admin.ModelAdmin):
     fieldsets = [
             (None,          {'fields': ['name']}),
-            ('Atributes',   {'fields': ['atributes'], 'classes': ['collapse']}),
+            ('Attributes',   {'fields': ['attributes'], 'classes': ['collapse']}),
             ('Abilities',   {'fields': ['abilities'], 'classes': ['collapse']}),
         ]
-    filter_horizontal = ('atributes','abilities')
+    filter_horizontal = ('attributes','abilities')
 
-class StartAtributeAdmin(admin.ModelAdmin):
-    fields = ['universe','race','atribute','value']
+class StartAttributeAdmin(admin.ModelAdmin):
+    fields = ['universe','race','attribute','value']
+
+class UniverseCreatorAdmin(admin.ModelAdmin):
+    fields = ['universe','user','role']
 
 admin.site.register(Universe,UniverseAdmin)
-admin.site.register(Atribute)
+admin.site.register(UniverseCreator,UniverseCreatorAdmin)
+admin.site.register(Attribute)
 admin.site.register(Ability)
 admin.site.register(Race)
-admin.site.register(StartAtribute,StartAtributeAdmin)
+admin.site.register(StartAttribute,StartAttributeAdmin)
