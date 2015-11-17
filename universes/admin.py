@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Universe, UniverseCreator, Attribute, Ability, Race, StartAttribute
+from .models import Universe, UniverseManager, Attribute, Ability, Race, RaceAttribute
 
 class UniverseAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -10,15 +10,15 @@ class UniverseAdmin(admin.ModelAdmin):
         ]
     filter_horizontal = ('attributes','abilities')
 
-class StartAttributeAdmin(admin.ModelAdmin):
+class RaceAttributeAdmin(admin.ModelAdmin):
     fields = ['universe','race','attribute','value']
 
-class UniverseCreatorAdmin(admin.ModelAdmin):
+class UniverseManagerAdmin(admin.ModelAdmin):
     fields = ['universe','user','role']
 
 admin.site.register(Universe,UniverseAdmin)
-admin.site.register(UniverseCreator,UniverseCreatorAdmin)
+admin.site.register(UniverseManager,UniverseManagerAdmin)
 admin.site.register(Attribute)
 admin.site.register(Ability)
 admin.site.register(Race)
-admin.site.register(StartAttribute,StartAttributeAdmin)
+admin.site.register(RaceAttribute,RaceAttributeAdmin)
