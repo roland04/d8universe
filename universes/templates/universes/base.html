@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <title>d8Universe</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  </head>
+  <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <div id="header">
+      {% include "universes/header.html" %}
+    </div>
+    <div id="page">
+      {% block content %}
+      {% endblock %}
+    </div>
+    <div id="footer">
+    </div>
+  </body>
+</html>
