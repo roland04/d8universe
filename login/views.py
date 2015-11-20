@@ -29,10 +29,3 @@ def user_logout(request):
     context = RequestContext(request)
     logout(request)
     return HttpResponseRedirect('/')
-
-def user_invalid(request):
-    context = RequestContext(request)
-
-
-def user_disabled(request):
-    context = RequestContext(request)
