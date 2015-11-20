@@ -17,10 +17,11 @@ def user_login(request):
                 login(request, user)
                 return HttpResponseRedirect('/')
             else:
-                return HttpResponse("Your d8universe account is disabled.")
+                alert = "%s account is disabled." % request.POST['username']
+                return render_to_response('website/alert.html', {"message":alert}, context)
         else:
-            print ("Invalid login details")
-            return HttpResponse("Invalid login details supplied.")
+            alert = "Invalid User or Password."
+            return render_to_response('website/alert.html', {"message":alert}, context)
 
     return render_to_response('website/index.html', {}, context)
 
@@ -28,3 +29,10 @@ def user_logout(request):
     context = RequestContext(request)
     logout(request)
     return HttpResponseRedirect('/')
+
+def user_invalid(request):
+    context = RequestContext(request)
+
+
+def user_disabled(request):
+    context = RequestContext(request)
